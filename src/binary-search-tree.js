@@ -1,46 +1,79 @@
 const { NotImplementedError } = require('../extensions/index.js');
 
-// const { Node } = require('../extensions/list-tree.js');
+const { Node } = require('../extensions/list-tree.js');
 
-/**
-* Implement simple binary search tree according to task description
-* using Node from extensions
-*/
+
 module.exports = class BinarySearchTree {
+  constructor() {
+    this.rootBinary = null
+  }
 
   root() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.rootBinary
   }
 
-  add(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  add( data ) {
+    const newNode = new Node(data)
+    this.rootBinary === null ? this.rootBinary = newNode : this.addNode(this.rootBinary, newNode)
   }
 
-  has(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  addNode( rootBinary, newNode ) {
+    if (newNode.data < rootBinary.data) {
+      rootBinary.left === null ? rootBinary.left = newNode : this.addNode(rootBinary.left, newNode)
+    } else
+     if (newNode.data > rootBinary.data) {
+      rootBinary.right === null ? rootBinary.right = newNode : this.addNode(rootBinary.right, newNode)
+    }
   }
 
-  find(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  has( data ) {
+    return this.getHas(this.tree, data)
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  getHas( tree, data ) {
+    if (tree.data === data) {
+      return true 
+    } else 
+    if (tree.data > data) {
+      return tree.left === null ? false : this.getHas(tree.left, data) 
+    } else 
+    if (tree.data < data) {
+      return tree.right === null ? false : this.getHas(tree.right, data) 
+    }
   }
 
-  min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  find(data) {
+    let current = this.root() 
+        while (current.data !== data) {
+            if (data < current.data) {
+                current = current.left
+            } else {
+                current = current.right
+            }
+            if (current === null) {
+                return null
+            }
+        }
+        return current
+  }
+  getFind( tree, data ) {
+    if (tree === null) {
+      return null 
+    } else
+     if (tree.data === data) {
+      return tree 
+    } else
+     if (tree.data > data) {
+      return tree.left === null ? null : this.getFind(tree.left, data) 
+    } else
+     if (tree.data < data) {
+      return tree.right === null ? null : this.getFind(tree.right, data) 
+    }
   }
 
-  max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+  remove() {}
 
+  min() {}
+
+  max() {}
 }
